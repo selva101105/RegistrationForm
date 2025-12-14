@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Registration</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: url(backgroundImage.jpeg) no-repeat center/cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .card {
+        width: 340px;
+        background: white;
+        padding: 30px;
+        border-radius: 14px;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+    }
+
+    /* Registration Heading Font */
+    .card h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-family: 'Playfair Display', serif;
+        font-size: 30px;
+        
+    }
+
+    .input-box {
+        margin-bottom: 20px;
+    }
+
+    .input-box label {
+        font-size: 12px;
+        color: #171717;
+        font-family: 'Poppins', sans-serif;
+        font-size: medium;
+        font-weight: bold;
+    }
+
+    .input-field {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #bebebe;
+        padding-bottom: 6px ;
+        padding-top: 6px ;
+    }
+    
+    .input-field i {
+        color: #777;
+        margin-right: 10px;
+        font-size: 15px;
+    }
+
+    /* Input text font */
+    .input-field input {
+        border: none;
+        outline: none;
+        width: 100%;
+        font-size: 15px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .error {
+        color: red;
+        font-size: 13px;
+        margin-top: 3px;
+        display: none;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        border: none;
+        border-radius: 25px;
+        background: linear-gradient(to right, #4facfe, #d441ff);
+        color: white;
+        font-size: 15px;
+        font-family: 'Poppins', sans-serif;
+        cursor: pointer;
+    }
+
+    button:disabled {
+        background: gray;
+        cursor: not-allowed;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Registration</h2>
+
+    <div class="input-box">
+        <label>Name</label>
+        <div class="input-field">
+            <i class="fa fa-user"></i>
+            <input type="text" id="name" placeholder="Enter your name">
+        </div>
+        <div class="error" id="nameError">Name is required</div>
+    </div>
+
+    <div class="input-box">
+        <label>Email</label>
+        <div class="input-field">
+            <i class="fa fa-envelope"></i>
+            <input type="text" id="email" placeholder="Enter your email">
+        </div>
+        <div class="error" id="emailError">Invalid email address</div>
+    </div>
+
+    <div class="input-box">
+        <label>Password</label>
+        <div class="input-field">
+            <i class="fa fa-lock"></i>
+            <input type="password" id="password" placeholder="Enter password">
+        </div>
+        <div class="error" id="passError">Minimum 6 characters</div>
+    </div>
+
+    <div class="input-box">
+        <label>Confirm Password</label>
+        <div class="input-field">
+            <i class="fa fa-lock"></i>
+            <input type="password" id="confirmPassword" placeholder="Confirm password">
+        </div>
+        <div class="error" id="confirmError">Passwords do not match</div>
+    </div>
+
+    <button id="register" disabled>REGISTER</button>
+</div>
+
+
+<script>
+    var nameInput = document.getElementById("name");
+    var emailInput = document.getElementById("email");
+    var passInput = document.getElementById("password");
+    var confirmInput = document.getElementById("confirmPassword");
+    var registerBtn = document.getElementById("register");
+
+    var nameError = document.getElementById("nameError");
+    var emailError = document.getElementById("emailError");
+    var passError = document.getElementById("passError");
+    var confirmError = document.getElementById("confirmError");
+
+    var nameTouched = false;
+    var emailTouched = false;
+    var passTouched = false;
+    var confirmTouched = false;
+
+    function validateName() {
+        var nameRegex = /^[a-zA-Z]+$/;
+        if (nameInput.value === "" || !nameRegex.test(nameInput.value)) {
+            if (nameTouched) nameError.style.display = "block";
+            return false;
+        }
+        nameError.style.display = "none";
+        return true;
+    }
+
+    function validateEmail() {
+        var emailRegex = /^[a-zA-Z0-9]+@gmail\.com$/;
+        if (emailInput.value === "" || !emailRegex.test(emailInput.value)) {
+            if (emailTouched) emailError.style.display = "block";
+            return false;
+        }
+        emailError.style.display = "none";
+        return true;
+    }
+
+    function validatePassword() {
+        if (passInput.value.length < 6) {
+            if (passTouched) passError.style.display = "block";
+            return false;
+        }
+        passError.style.display = "none";
+        return true;
+    }
+
+    function validateConfirm() {
+        if (confirmInput.value === "" || confirmInput.value !== passInput.value) {
+            if (confirmTouched) confirmError.style.display = "block";
+            return false;
+        }
+        confirmError.style.display = "none";
+        return true;
+    }
+
+    // Blur → mark touched & show error
+    nameInput.onblur = function () {
+        nameTouched = true;
+        validateName();
+    };
+
+    emailInput.onblur = function () {
+        emailTouched = true;
+        validateEmail();
+    };
+
+    passInput.onblur = function () {
+        passTouched = true;
+        validatePassword();
+    };
+
+    confirmInput.onblur = function () {
+        confirmTouched = true;
+        validateConfirm();
+    };
+
+    // Input → live validation + auto enable button
+    nameInput.oninput = function () {
+        validateName();
+        checkButton();
+    };
+
+    emailInput.oninput = function () {
+        validateEmail();
+        checkButton();
+    };
+
+    passInput.oninput = function () {
+        validatePassword();
+        checkButton();
+    };
+
+    confirmInput.oninput = function () {
+        validateConfirm();
+        checkButton();
+    };
+
+    function checkButton() {
+        if (
+            validateName() &&
+            validateEmail() &&
+            validatePassword() &&
+            validateConfirm()
+        ) {
+            registerBtn.disabled = false;
+        } else {
+            registerBtn.disabled = true;
+        }
+    }
+
+    registerBtn.onclick = function () {
+        alert("Registration Successful");
+    };
+
+    // Initially disabled
+    registerBtn.disabled = true;
+</script>
+
+
+
+
+</body>
+</html>
