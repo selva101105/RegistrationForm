@@ -1,4 +1,4 @@
-# Registration Form with Validation
+# Registration Form 
 
 Description
 This project is a simple **Registration Form** created using **HTML, CSS, and JavaScript**.  
